@@ -1,0 +1,208 @@
+/* CURRENT STYLESHEET */
+* {
+	outline: 0;
+	padding: 0;
+	margin: 0;
+}
+
+:active, :focus {
+	outline:0;
+	text-decoration:none;
+	outline-style:none;
+	-moz-outline-style:none;
+}
+
+/* Another Red example (Dad's choice) */
+/*
+.color-primary-0 { color: #180011 }
+.color-primary-1 { color: #FFFFFF }
+.color-primary-2 { color: #D096C0 }
+.color-primary-3 { color: #802D69 }
+.color-primary-4 { color: #4C0037 }
+*/
+
+body,html {
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+	height:100%;
+	width:100%;
+/* 	background-color: #FFFFFF; */
+	background-color:#180011;
+/* 	font-family: 'Open Sans', serif; */
+	font-family: 'Roboto', sans-serif;
+}
+
+label {
+	display:block;
+	float:left;
+}
+
+a { outline: 0; }
+
+/* PURPLE HUES */
+/*
+.color-primary-0 { color: #080016 }
+.color-primary-1 { color: #FFFFFF }
+.color-primary-2 { color: #A493C4 }
+.color-primary-3 { color: #483075 }
+.color-primary-4 { color: #1D0746 }
+*/
+
+/* RED/PINK/PURPLISH */
+/*
+.color-primary-0 { color: #120015 }
+.color-primary-1 { color: #FFFFFF }
+.color-primary-2 { color: #B78CC0 }
+.color-primary-3 { color: #652971 }
+.color-primary-4 { color: #380243 }
+*/
+
+
+
+.mainwrapper {
+	width:1000px;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:#FFF;
+	height:100%;
+	border-left:1px solid #ddd;
+	border-right:1px solid #ddd;
+	padding-left:10px;
+	padding-right:10px;
+	min-height:700px;
+}
+
+.maincontent {
+	width:100%;
+	padding-top:60px;
+}
+
+
+/*
+input[type=button], input[type=submit] {
+	background-color: #7A7A7A;
+	border: medium none;
+	color: #EDEDED;
+	font-family: Monaco,Consolas,"Lucida Console",monospace;
+	margin-top: 5px;
+	text-align: center;
+	border-radius:4px;
+}
+
+input[type=button]:hover, input[type=submit]:hover {
+	opacity: .8;
+}
+*/
+
+/* begin sticky footer css */
+.footer {
+	position: fixed;
+	bottom: 0;
+	height: 30px;
+	opacity: .95;
+	width: 100%;
+	background-color: #FFF;
+	z-index: 1000;
+	font-size:14px;
+	color:#666;
+	line-height:30px;
+	box-shadow:0 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(0, 0, 0, 0.03), 0 0 1px 1px rgba(0, 0, 0, 0.03), 0 0 1px 1px rgba(0, 0, 0, 0.12)
+}
+
+.innerfooter {
+	width: 1020px;
+	margin-left:auto;
+	margin-right:auto;
+}
+/* end sticky footer css */
+
+
+/* beg sticky header css */
+.header {
+    background-color: #FFF;
+	color:#666;
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    top: 0;
+    z-index: 2000;
+	box-shadow:0 1px 1px rgba(0, 0, 0, 0.15), -1px 0 0 rgba(0, 0, 0, 0.03), 1px 0 0 rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.12)
+}
+
+.header-logo {
+	height:100%;
+	float:left;
+	padding-left:50px;
+	width:200px;
+}
+
+.h100fl {
+	height:100%;
+	float:left;
+}
+
+.logowrapper {
+	float:left;
+	width:200px;
+}
+
+.header-content {
+	width:100%;
+	height:100%;
+	line-height:1.5;
+}
+.header-nav {
+	padding:25px;
+	float:right;
+	cursor:pointer;
+}
+
+.header-search {
+	float:right;
+	height:100%;
+	padding-right:50px;
+	width:320px;
+}
+
+.main-content {
+	width:1065px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:85px;
+}
+.title {
+	width:100%;
+	line-height:2.5em;
+	font-size:24px;
+	float:left;
+}
+.titletext {
+	float:left;
+	cursor:default;
+}
+.arrowdiv {
+	height:20px;
+	float:left;
+	width:100%;
+}
+.spanbtn {
+	display:block !important;
+	text-align:center;
+	width:55px;
+	font-size:21px;
+	cursor:pointer;
+}
+.divider {
+	background-color: #555;
+	border-radius: 10px;
+	cursor: default;
+	height: 100%;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 0;
+	padding: 0;
+	width: 2px;
+	float:right;
+}
+/* end sticky header css */
