@@ -23,6 +23,8 @@
 // 	$search = urlencode($txt);
 //	$search = $txt;
 
+	$foo = array(1,"b",3);
+	$bar = (isset($foo[1]) && gettype($foo[1]) != "NULL") ? gettype($foo[1]) : "NULL";
 
 	$wine = new Wine(true);
 	$wine->loadWineData($search);
@@ -88,7 +90,7 @@
 		<div id="header" class="header"></div>
 		<div id="mainwrapper" class="mainwrapper">
 			<div id="maincontent" class="maincontent">
-				Welcome!
+				Welcome! BAR IS: <?php echo $bar; ?>
 			</div>
 			<div style="float:left;width:100%;margin-top:20px;">
 				SEARCH TERM: <?php echo $search; ?>

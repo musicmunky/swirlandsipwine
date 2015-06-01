@@ -15,6 +15,7 @@
 			200 => "Unable to Authorize. We cannot authorize this account.",
 			300 => "No Access. Account does not have access to this service."
 		);
+		private $wintyp = array();
 
 /*
 	Parameter 	Description 														Example
@@ -32,7 +33,7 @@
 
 	Example Link:
 		http://services.wine.com/api/beta2/service.svc/<format>/<resource>?apikey=<key>&<parameters>
-		http://services.wine.com/api/beta2/service.svc/JSON/catalog?apikey=7636169f537a17119ac9c4cd2dc8a256&term=ornellaia+2006
+		http://services.wine.com/api/beta2/service.svc/JSON/catalog?apikey=3scale-F92B6F756B784DB88EE29EB2BFA054C0&term=mondavi+cab
 
 	API Reference:
 		https://api.wine.com/wiki/api-object-dictionary#_catalog_objects
@@ -96,11 +97,12 @@
 
 				$this->setWineCount($rescon['Products']['Total']);
 				$this->setRequestCode($rescon['Status']['ReturnCode']);
+				$this->setStatus($rescon['Status']['ReturnCode']);
 			}
 			catch(Exception $e)
 			{
 				$this->setErrorMessages($rescon['Status']['Messages']);
-				$this->setStatus("ERROR: " . $e->getMessage() . "<br>" . $this->errmsg[$rescon['Status']['ReturnCode']]);
+				$this->setStatus($rescon['Status']['ReturnCode'], "ERROR: " . $e->getMessage());
 				$this->setRequestCode($rescon['Status']['ReturnCode']);
 				$this->setWineData(array("ERROR" => $e->getMessage()));
 			}
@@ -145,11 +147,12 @@
 			return $this->status;
 		}
 
-		private function setStatus($s)
+		private function setStatus($s, $devmsg = "")
 		{
 			$r = true;
 			try {
-				$this->status = $this->errmsg[$s];
+				$dm = $devmsg == "" ? "" : $devmsg . "<br>";
+				$this->status = $dm . $this->errmsg[$s];
 			}
 			catch(Exception $e) {
 				$r = false;
@@ -225,174 +228,149 @@
 			return $r;
 		}
 
-
-		private function getWineInfo($k)
-		{}
-/*
-		public function getLatitude($type = "string")
+		private function getWineInfo($k, $n = 0)
 		{
-			return $this->getLatLongInformation("lat", $type);
-		}
-
-		public function getLongitude($type = "string")
-		{
-			return $this->getLatLongInformation("lng", $type);
-		}
-
-		public function getLatLong($type = "1DArray")
-		{
-			return $this->getLatLongInformation("latlng", $type);
-		}
-
-		public function getFormattedAddress($type = "string")
-		{
-			return $this->getPlaceInformation("formatted_address", $type);
-		}
-
-		public function getPlaceID($type = "string")
-		{
-			return $this->getPlaceInformation("place_id", $type);
-		}
-
-		public function getSuburb($type = "string")
-		{
-			return $this->getAddressComponents("suburb", $type);
-		}
-
-		public function getCity($type = "string")
-		{
-			return $this->getAddressComponents("city", $type);
-		}
-
-		public function getState($type = "string")
-		{
-			return $this->getAddressComponents("state", $type);
-		}
-
-		public function getCountry($type = "string")
-		{
-			return $this->getAddressComponents("country", $type);
-		}
-
-		public function getZipCode($type = "string")
-		{
-			return $this->getAddressComponents("zipcode", $type);
-		}
-
-		public function getResultCount()
-		{
-			return $this->rescnt;
-		}
-
-		public function getGeoData()
-		{
-			return $this->geodat;
-		}
-
-		private function getLatLongInformation($k, $type)
-		{
-			$rval = array();
-			$rslt = $this->getGeoData();
-			$alen = count($rslt);
-			try {
-				if($k == "latlng"){
-					if($type == "array" || $type == "a"){
-						for($i = 0; $i < $alen; $i++)
-						{
-							array_push($rval, array($rslt[$i]['geometry']['location']['lat'], $rslt[$i]['geometry']['location']['lng']));
-						}
-					}
-					else
-					{
-						array_push($rval, array($rslt[0]['geometry']['location']['lat'], $rslt[0]['geometry']['location']['lng']));
-					}
-				}
-				else
+			$result = "";
+			if(isset($this->getWineData()[$n]) && gettype($this->getWineData()[$n]) != "NULL")
+			{
+				if(isset($this->getWineData()[$n][$k]) && gettype($this->getWineData()[$n][$k] != "NULL"))
 				{
-					if($type == "array" || $type == "a"){
-						for($i = 0; $i < $alen; $i++)
-						{
-							array_push($rval, $rslt[$i]['geometry']['location'][$k]);
-						}
-					}
-					else
-					{
-						$rval = $rslt[0]['geometry']['location'][$k];
-					}
+					$result = $this->getWineData()[$n][$k];
 				}
-
-			} catch(Exception $e) {}
-			return $rval;
+			}
 		}
 
-		private function getPlaceInformation($k, $type)
+		public function getWineId($n = 0)
 		{
-			$rval = array();
-			$kval = $k;
-			$rslt = $this->getGeoData();
-			$alen = count($rslt);
-			try {
-				if($type == "array" || $type == "a"){
-					for($i = 0; $i < $alen; $i++)
-					{
-						array_push($rval, $rslt[$i][$kval]);
-					}
-				}
-				else
-				{
-					$rval = $rslt[0][$kval];
-				}
-			} catch(Exception $e) { $rval = $this->status; }
-			return $rval;
+			return $this->getWineInfo("Id", $n);
 		}
 
-		private function getAddressComponents($k, $type)
+		public function getWineName($n = 0)
 		{
-			$rval = array();
-			$kval = $this->lookup[$k];
-			$rslt = $this->getGeoData();
-			$alen = count($rslt);
-			try {
-				if($type == "array" || $type == "a"){
-					for($i = 0; $i < $alen; $i++)
-					{
-						$addcomps = $rslt[$i]['address_components'];
-						$flag = 0;
-						for($j = 0; $j < count($addcomps); $j++)
-						{
-							if($addcomps[$j]['types'][0] == $kval)
-							{
-								array_push($rval, array("long_name" => $addcomps[$j]['long_name'], "short_name" => $addcomps[$j]['short_name']));
-								$flag = 1;
-								break;
-							}
-						}
-						if($flag == 0){
-							array_push($rval, array("long_name" => "NO_DATA_FOR_KEY " . $kval, "short_name" => "NO_DATA"));
-						}
-					}
-				}
-				else
-				{
-					$addcomps = $rslt[0]['address_components'];
-					$flag = 0;
-					for($j = 0; $j < count($addcomps); $j++)
-					{
-						if($addcomps[$j]['types'][0] == $kval)
-						{
-							$rval = ($kval == "locality") ? $addcomps[$j]['long_name'] : $addcomps[$j]['short_name'];
-							$flag = 1;
-							break;
-						}
-					}
-					if($flag == 0){
-						$rval = "NO_DATA";
-					}
-				}
-			} catch(Exception $e) { $rval = $this->status; }
-			return $rval;
+			return $this->getWineInfo("Name", $n);
 		}
-*/
+
+		public function getWinePrice($n = 0)
+		{
+			return $this->getWineInfo("PriceRetail", $n);
+		}
+
+		public function getPriceMax($n = 0)
+		{
+			return $this->getWineInfo("PriceMax", $n);
+		}
+
+		public function getPriceMin($n = 0)
+		{
+			return $this->getWineInfo("PriceMin", $n);
+		}
+
+		public function getWineType($n = 0)
+		{
+			return $this->getWineInfo("Type", $n);
+		}
+
+		public function getWineYear($n = 0)
+		{
+			return $this->getWineInfo("Year", $n);
+		}
+
+		public function getAppellation($n = 0)
+		{
+			$appell = array();
+			try {
+				$a = $this->getWineInfo("Appellation", $n);
+				if($a != "")
+				{
+					if(isset($a['Name'])) {
+						$appell['appellation'] = $a['Name'];
+					}
+					if(isset($a['Region']['Name'])) {
+						$appell['region'] = $a['Region']['Name'];
+					}
+				}
+			}
+			catch(Exception $e){}
+			return $appell;
+		}
+
+		public function getRatings($n = 0)
+		{
+			$rating = 0;
+			try {
+				$r = $this->getWineInfo("Ratings", $n);
+				if(isset($r['HighestScore']))
+				{
+					$rating = $r['HighestScore'];
+				}
+			}
+			catch(Exception $e){}
+			return $rating;
+		}
+
+		public function getLabels($n = 0)
+		{
+			$labels = array();
+			try {
+				$l = $this->getWineInfo("Labels", $n);
+				for($i = 0; $i < count($l); $i++)
+				{
+					if(isset($l[$i]['Url'])){
+						array_push($labels, $l[$i]['Url']);
+					}
+				}
+			}
+			catch(Exception $e){}
+			return $labels;
+		}
+
+		public function getVarietal($n = 0)
+		{
+			$varietal = array();
+			try {
+				$v = $this->getWineInfo("Varietal", $n);
+				if(isset($v['Name']))
+				{
+					$varietal['name'] = $v['Name'];
+					if(isset($v['WineType']['Name']))
+					{
+						$varietal['type'] = $v['WineType']['Name'];
+					}
+				}
+			}
+			catch(Exception $e){}
+			return $varietal;
+		}
+
+		public function getVineyard($n = 0)
+		{
+			$vineyard = "";
+			try {
+				$v = $this->getWineInfo("Vineyard", $n);
+				if(isset($v['Name']))
+				{
+					$vineyard = $v['Name'];
+				}
+			}
+			catch(Exception $e){}
+			return $vineyard;
+		}
+
+		public function getProductAttributes($n = 0)
+		{
+			$attr = array();
+			try{
+				$a = $this->getWineInfo("ProductAttributes", $n);
+				for($i = 0; $i < count($a); $i++)
+				{
+					if(isset($a[$i]['Name'])){
+						array_push($attr, $a[$i]['Name']);
+					}
+				}
+			}
+			catch(Exception $e){}
+			return $attr;
+		}
 
 	}
 
