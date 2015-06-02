@@ -80,7 +80,7 @@
 				}
 
 				$search   = urlencode($srch);
-				$requrl   = $url . $format . "/" . $resource . "?apikey=" . $key . "&term=" . $search;
+				$requrl   = $url . $format . "/" . $resource . "?apikey=" . $key . "&size=10&term=" . $search;
 				$content  = file_get_contents($requrl);
 				$rescon   = json_decode($content, true);
 
@@ -238,6 +238,7 @@
 					$result = $this->getWineData()[$n][$k];
 				}
 			}
+			return $result;
 		}
 
 		public function getWineId($n = 0)
@@ -277,7 +278,7 @@
 
 		public function getAppellation($n = 0)
 		{
-			$appell = array();
+			$appell = array("appellation" => "", "region" => "");
 			try {
 				$a = $this->getWineInfo("Appellation", $n);
 				if($a != "")
@@ -326,7 +327,7 @@
 
 		public function getVarietal($n = 0)
 		{
-			$varietal = array();
+			$varietal = array("name" => "", "type" => "");
 			try {
 				$v = $this->getWineInfo("Varietal", $n);
 				if(isset($v['Name']))

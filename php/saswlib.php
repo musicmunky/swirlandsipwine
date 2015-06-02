@@ -57,54 +57,75 @@
 	}
 
 
-	function getWineInfo($P)
+	function getWineInfo($P, $ajax = true)
 	{
 		$P = escapeArray($P);
-
-
-		//$search  = urlencode($s);
-		//$tmp = escapeArray(array($s)); //trying this to see if Google can handle apostrophe's better this way...
 		$search = urlencode($P['search']);
 
-		$status  = "";
+		$status  = "failure";
 		$message = "";
-		$rsp	 = array();
+		$result	 = array();
+		$content = array();
 
-		$wn = new Wine(true);
-		$wn->loadWineData($search);
-		$result = $wn->getWineData();
+		$wine = new Wine(true);
+		$wine->loadWineData($search);
 
-		/*
-		$status = $wn->getStatus();
-		$rsp['geo_status'] = $status;
+		$rcode = $wine->getRequestCode();
 
-		if($status == "OK")
+		$total = 0;
+	 	$wines = array();
+
+		$constat = $wine->getStatus();
+		$conmsgs = $wine->getErrorMessages();
+
+		if($rcode == 0)
 		{
+			$total = $wine->getWineCount() > 10 ? 10 : $wine->getWineCount();
+			$wntmp = array();
+			for($i = 0; $i < $total; $i++)
+			{
+				$wntmp['id'] 			= $wine->getWineId($i);
+				$wntmp['name'] 			= $wine->getWineName($i);
+				$wntmp['vineyardname'] 	= $wine->getVineyard($i);
+				$wntmp['maxprice'] 		= $wine->getPriceMax($i);
+				$wntmp['minprice'] 		= $wine->getPriceMin($i);
+				$wntmp['retailprice'] 	= $wine->getWinePrice($i);
+				$wntmp['type'] 			= $wine->getWineType($i);
+				$wntmp['year'] 			= $wine->getWineYear($i);
+				$wntmp['appellation'] 	= $wine->getAppellation($i)['appellation'];
+				$wntmp['region'] 		= $wine->getAppellation($i)['region'];
+				$wntmp['rating'] 		= $wine->getRatings($i);
+				$wntmp['label'] 		= $wine->getLabels($i)[0];
+				$wntmp['varietal'] 		= $wine->getVarietal($i)['name'];
+				$wntmp['varietaltype'] 	= $wine->getVarietal($i)['type'];
+				$wntmp['attributes'] 	= implode(", ", $wine->getProductAttributes($i));
+				array_push($wines, $wntmp);
+			}
 
-		}
-		else
-		{
-			$status = "SERVER ERROR - " . $wn->getStatus();
-			$message = "There was an error retrieving your information";
+			$status = "success";
+			$message = "request completed successfully";
 		}
 
-		unset($wn);
+		unset($wine);
+
+		$content['wines']			= $wines;
+		$content['status']			= $constat;
+		$content['error_messages']	= $conmsgs;
+		$content['response_code']	= $rcode;
+		$content['num_recs']		= $total;
 
 		$result = array(
 				"status"  => $status,
 				"message" => $message,
-				"content" => $rsp
+				"content" => $content
 		);
-		*/
 
-// 		if($ajax){
-// 			echo json_encode($result);
-// 		}
-// 		else {
+ 		if($ajax){
+ 			echo json_encode($result);
+ 		}
+ 		else {
 			return $result;
-// 		}
-
-
+ 		}
 	}
 
 
