@@ -95,7 +95,7 @@
 				$wntmp['appellation'] 	= $wine->getAppellation($i)['appellation'];
 				$wntmp['region'] 		= $wine->getAppellation($i)['region'];
 				$wntmp['rating'] 		= $wine->getRatings($i);
-				$wntmp['label'] 		= $wine->getLabels($i)[0];
+				$wntmp['label'] 		= "http://cache.wine.com/labels/" . $wine->getWineId($i) . "l.jpg"; //$wine->getLabels($i)[0];
 				$wntmp['varietal'] 		= $wine->getVarietal($i)['name'];
 				$wntmp['varietaltype'] 	= $wine->getVarietal($i)['type'];
 				$wntmp['attributes'] 	= implode(", ", $wine->getProductAttributes($i));
