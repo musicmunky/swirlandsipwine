@@ -67,7 +67,7 @@
 		$result	 = array();
 		$content = array();
 
-		$wine = new Wine(true);
+		$wine = new Wine();
 		$wine->loadWineData($search);
 
 		$rcode = $wine->getRequestCode();

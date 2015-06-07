@@ -41,26 +41,38 @@
 
 		/**
 		* Create a new instance
-		*
-		* @param Boolean $loadfromdb
-		* @param String $apikey
-		* @param String $apiurl
 		*/
-		function __construct($loadfromdb, $apikey = "", $apiurl = "")
+		function __construct()
 		{
-			if($loadfromdb)
-			{
-				try {
-					$apinfo = mysql_fetch_assoc(mysql_query("SELECT APIKEY, URL FROM wineapikeys WHERE SERVICE='wine.com';"));
-					$apikey = $apinfo['APIKEY'];
-					$apiurl = $apinfo['URL'];
-				}
-				catch(Exception $e) {}
-
+			try {
+				$apinfo = mysql_fetch_assoc(mysql_query("SELECT APIKEY, URL FROM wineapikeys WHERE SERVICE='wine.com';"));
+				$apikey = $apinfo['APIKEY'];
+				$apiurl = $apinfo['URL'];
 			}
+			catch(Exception $e) {}
+
 			$this->apikey = $apikey;
 			$this->apiurl = $apiurl;
 		}
+
+		// @TODO: Setup multiple constructors in case you want to pass in the key/url like so:
+		//
+		// LINK FOR EXAMPLE:
+		// http://stackoverflow.com/questions/1699796/best-way-to-do-multiple-constructors-in-php/28123116#28123116
+
+		/**
+		* Create a new instance
+		*
+		* @param String $key
+		* @param String $url
+		*/
+		/*
+		function __construct2($key, $url)
+		{
+			$this->apikey = $key;
+			$this->apiurl = $url;
+		}*/
+
 
 		public function loadWineData($srch, $format = "JSON", $resource = "catalog")
 		{

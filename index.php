@@ -25,11 +25,8 @@
 			</div>
 			<div id="wineinfo" style="width:100%;float:left;"></div>
 		</div>
-		<div class="footer">
-			<div class="footer-inner">
-				Swirl and Sip Wine Club
-			</div>
-		</div>
+
+		<?php include("includes/footer.html"); ?>
 
 	</body>
 </html>
