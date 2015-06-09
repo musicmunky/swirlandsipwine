@@ -10,7 +10,6 @@ $( document ).ready(function() {
 	{
 		document.body.style.fontFamily = "'Trebuchet MS', Helvetica, sans-serif";
 	}
-
 });
 
 
@@ -24,7 +23,7 @@ function runSearch()
 	}
 
 	var info = {
-		"type": "POST",
+		"type": "GET",
 		"path": "php/saswlib.php",
 		"data": {
 			"method": 	"getWineInfo",
@@ -75,12 +74,14 @@ function runSearchResponse(h)
 			var divnam = FUSION.lib.createHtmlElement({"type":"div","style":{"float":"left","height":"100%","width":"290px"}});
 			var lblnam = FUSION.lib.createHtmlElement({"type":"label","style":{"width":"100%"},
 													   "text":"Wine Name: "});
-			var spnnam = FUSION.lib.createHtmlElement({"type":"span","style":{"fontWeight":"bold"},
-													   "text":wines[i]['name']});
+			var spnnam = FUSION.lib.createHtmlElement({"type":"span","style":{"fontWeight":"bold"}});
+			var lnknam = FUSION.lib.createHtmlElement({"type":"a","text":wines[i]['name'],"style":{"textDecoration":"none"},
+								   "attributes":{"href":wines[i]['url'],"target":"_blank"}});
 			var lblvin = FUSION.lib.createHtmlElement({"type":"label","style":{"width":"100%"},
 													   "text":"Vineyard: "});
 			var spnvin = FUSION.lib.createHtmlElement({"type":"span","style":{"fontWeight":"bold"},
 													   "text":wines[i]['vineyardname']});
+			spnnam.appendChild(lnknam);
 			lblnam.appendChild(spnnam);
 			lblvin.appendChild(spnvin);
 			divnam.appendChild(lblnam);

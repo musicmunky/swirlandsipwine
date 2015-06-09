@@ -41,9 +41,29 @@
 
 		/**
 		* Create a new instance
+		* LINK FOR EXAMPLE:
+		* http://stackoverflow.com/questions/1699796/best-way-to-do-multiple-constructors-in-php/28123116#28123116
 		*/
 		function __construct()
 		{
+			$get_arguments       = func_get_args();
+			$number_of_arguments = func_num_args();
+
+			if(method_exists($this, $method_name = '__construct' . $number_of_arguments))
+			{
+				call_user_func_array(array($this, $method_name), $get_arguments);
+			}
+		}
+
+
+		/**
+		* Create a new instance, no parameters
+		*/
+		function __construct0()
+		{
+			$apikey = "";
+			$apiurl = "";
+
 			try {
 				$apinfo = mysql_fetch_assoc(mysql_query("SELECT APIKEY, URL FROM wineapikeys WHERE SERVICE='wine.com';"));
 				$apikey = $apinfo['APIKEY'];
@@ -55,23 +75,18 @@
 			$this->apiurl = $apiurl;
 		}
 
-		// @TODO: Setup multiple constructors in case you want to pass in the key/url like so:
-		//
-		// LINK FOR EXAMPLE:
-		// http://stackoverflow.com/questions/1699796/best-way-to-do-multiple-constructors-in-php/28123116#28123116
 
 		/**
-		* Create a new instance
+		* Create a new instance, two parameters
 		*
 		* @param String $key
 		* @param String $url
 		*/
-		/*
 		function __construct2($key, $url)
 		{
 			$this->apikey = $key;
 			$this->apiurl = $url;
-		}*/
+		}
 
 
 		public function loadWineData($srch, $format = "JSON", $resource = "catalog")
@@ -261,6 +276,11 @@
 		public function getWineName($n = 0)
 		{
 			return $this->getWineInfo("Name", $n);
+		}
+
+		public function getWineUrl($n = 0)
+		{
+			return $this->getWineInfo("Url", $n);
 		}
 
 		public function getWinePrice($n = 0)

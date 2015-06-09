@@ -1,6 +1,8 @@
 <?php
 
-	if(isset($_POST['libcheck']) && !empty($_POST['libcheck'])){
+	$REQ = $_REQUEST;
+
+	if(isset($REQ['libcheck']) && !empty($REQ['libcheck'])){
 		define('LIBRARY_CHECK', true);
 	}
 
@@ -22,32 +24,37 @@
 
 	$webaddress = "http://swirlandsipwine.com/";
 
-	if(isset($_POST['method']) && !empty($_POST['method']))
+	if(isset($REQ['method']) && !empty($REQ['method']))
 	{
-		$method = $_POST['method'];
+		$method = $REQ['method'];
 		$method = urldecode($method);
 		$method = mysql_real_escape_string($method);
 
 		switch($method)
 		{
-			case 'getWineInfo': getWineInfo($_POST);
+			case 'getWineInfo': getWineInfo($REQ);
 				break;
-			case 'updateUser': updateUser($_POST);
+			case 'updateUser': updateUser($REQ);
 				break;
-			case 'createUser': createUser($_POST);
+			case 'createUser': createUser($REQ);
 				break;
-			case 'updatePassword': updatePassword($_POST);
+			case 'updatePassword': updatePassword($REQ);
 				break;
-			default: noFunction($_POST);
+			default: noFunction($REQ['method']);
 				break;
 		}
-		mysql_close($link);
+	}
+	else
+	{
+		noFunction("NO METHOD SPECIFIED");
 	}
 
+	mysql_close($link);
 
-	function noFunction()
+
+	function noFunction($m)
 	{
-		$func = $_POST['method'];
+		$func = $m;
 		$result = array(
 				"status"	=> "failure",
 				"message"	=> "User attempted to call function: " . $func . " which does not exist",
@@ -86,6 +93,7 @@
 			{
 				$wntmp['id'] 			= $wine->getWineId($i);
 				$wntmp['name'] 			= $wine->getWineName($i);
+				$wntmp['url']			= $wine->getWineUrl($i);
 				$wntmp['vineyardname'] 	= $wine->getVineyard($i);
 				$wntmp['maxprice'] 		= $wine->getPriceMax($i);
 				$wntmp['minprice'] 		= $wine->getPriceMin($i);
