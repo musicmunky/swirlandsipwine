@@ -43,13 +43,8 @@
 			default: noFunction($REQ['method']);
 				break;
 		}
+		mysql_close($link);
 	}
-	else
-	{
-		noFunction("NO METHOD SPECIFIED");
-	}
-
-	mysql_close($link);
 
 
 	function noFunction($m)
@@ -58,7 +53,7 @@
 		$result = array(
 				"status"	=> "failure",
 				"message"	=> "User attempted to call function: " . $func . " which does not exist",
-				"content"	=> "You seem to have encountered an error - Contact the DHD web admin if this keeps happening!"
+				"content"	=> "You seem to have encountered an error - Contact the Swirl and Sip web admin if this keeps happening!"
 		);
 		echo json_encode($result);
 	}
