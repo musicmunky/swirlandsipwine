@@ -1,3 +1,6 @@
+//REGEX FOR STRIPPING OUT POSSIBLE VINTAGE YEAR(S):
+//    /(19\d{2}|2\d{3})/g
+
 $( document ).ready(function() {
 
 // 	$('input, textarea').placeholder({customClass:'my-placeholder'});
@@ -81,12 +84,19 @@ function runSearchResponse(h)
 													   "text":"Vineyard: "});
 			var spnvin = FUSION.lib.createHtmlElement({"type":"span","style":{"fontWeight":"bold"},
 													   "text":wines[i]['vineyardname']});
+			var lblyer = FUSION.lib.createHtmlElement({"type":"label","style":{"width":"100%"},"text":"Possible Vintage(s): "});
+			if(wines[i]['vintage'].length > 0)
+			{
+				var years = wines[i]['vintage'].join(", ");
+				var spnyer = FUSION.lib.createHtmlElement({"type":"span","text":years,"style":{"fontWeight":"bold"}});
+				lblyer.appendChild(spnyer);
+			}
 			spnnam.appendChild(lnknam);
 			lblnam.appendChild(spnnam);
 			lblvin.appendChild(spnvin);
 			divnam.appendChild(lblnam);
 			divnam.appendChild(lblvin);
-
+			divnam.appendChild(lblyer);
 
 			var divreg = FUSION.lib.createHtmlElement({"type":"div","style":{"float":"left","height":"100%","width":"290px"}});
 			var lblreg = FUSION.lib.createHtmlElement({"type":"label","style":{"width":"100%"},

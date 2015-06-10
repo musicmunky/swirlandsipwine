@@ -61,6 +61,11 @@
 
 	function getWineInfo($P, $ajax = true)
 	{
+
+//REGEX FOR STRIPPING OUT POSSIBLE VINTAGE YEAR(S):
+//    /(19\d{2}|2\d{3})/g
+
+
 		$P = escapeArray($P);
 		$search = urlencode($P['search']);
 
@@ -90,6 +95,7 @@
 				$wntmp['name'] 			= $wine->getWineName($i);
 				$wntmp['url']			= $wine->getWineUrl($i);
 				$wntmp['vineyardname'] 	= $wine->getVineyard($i);
+				$wntmp['vintage']		= $wine->getWineVintage($i);
 				$wntmp['maxprice'] 		= $wine->getPriceMax($i);
 				$wntmp['minprice'] 		= $wine->getPriceMin($i);
 				$wntmp['retailprice'] 	= $wine->getWinePrice($i);

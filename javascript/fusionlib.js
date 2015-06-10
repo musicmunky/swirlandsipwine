@@ -536,9 +536,24 @@ FUSION.lib = {
 												  'linkvisible':false});
 				}
 			},
-			error: function() {
+			error: function(xhr, errtype, errthrown) {
 				FUSION.set.overlayMouseNormal();
-				FUSION.error.showError("The call to the server failed", "AJAX Error");
+				switch(errtype) {
+					case "error":
+						FUSION.lib.alert("<p>Error completing request: " + errthrown + "</p>");
+						break;
+					case "abort":
+						FUSION.lib.alert("<p>Call to server aborted: " + errthrown + "</p>");
+						break;
+					case "parsererror":
+						FUSION.lib.alert("<p>Parser error during request: " + errthrown + "</p>");
+						break;
+					case "timeout":
+						FUSION.lib.alert("<p>Call to server timed out - please try again</p>");
+						break;
+					default:
+						FUSION.error.showError("The call to the server failed", "AJAX Error");
+				}
 			},
 			timeout: tmot
 		});

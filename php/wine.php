@@ -273,6 +273,19 @@
 			return $this->getWineInfo("Id", $n);
 		}
 
+		public function getWineVintage($n = 0)
+		{
+			$vinarray = array();
+			$winename = $this->getWineName($n);
+			try {
+				//preg_match_all("/(19\d{2}|2\d{3})/", $winename, $vinarray);
+				preg_match("/(19\d{2}|2\d{3})/", $winename, $vinarray);
+			}
+			catch(Exception $e) { $vinarray[0] = "ERROR: " . $e->getMessage(); }
+			$nodups = array_unique($vinarray);
+			return $nodups;
+		}
+
 		public function getWineName($n = 0)
 		{
 			return $this->getWineInfo("Name", $n);
