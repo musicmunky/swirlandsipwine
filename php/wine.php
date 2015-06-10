@@ -269,7 +269,7 @@
 			$result = "";
 			if(isset($this->getWineData()[$n]) && gettype($this->getWineData()[$n]) != "NULL")
 			{
-				if(isset($this->getWineData()[$n][$k]) && gettype($this->getWineData()[$n][$k] != "NULL"))
+				if(isset($this->getWineData()[$n][$k]) && gettype($this->getWineData()[$n][$k]) != "NULL")
 				{
 					$result = $this->getWineData()[$n][$k];
 				}

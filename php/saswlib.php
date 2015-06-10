@@ -61,11 +61,6 @@
 
 	function getWineInfo($P, $ajax = true)
 	{
-
-//REGEX FOR STRIPPING OUT POSSIBLE VINTAGE YEAR(S):
-//    /(19\d{2}|2\d{3})/g
-
-
 		$P = escapeArray($P);
 		$search = urlencode($P['search']);
 
