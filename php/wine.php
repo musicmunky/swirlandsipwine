@@ -107,7 +107,7 @@
 				}
 
 				$search   = urlencode($srch);
-				$requrl   = $url . $format . "/" . $resource . "?apikey=" . $key . "&size=10&term=" . $search;
+				$requrl   = $url . $format . "/" . $resource . "?apikey=" . $key . "&size=100&term=" . $search;
 				$content  = file_get_contents($requrl);
 				$rescon   = json_decode($content, true);
 
@@ -122,7 +122,7 @@
 					throw new Exception("Error attempting to create Wine object");
 				}
 
-				$this->setWineCount($rescon['Products']['Total']);
+				//$this->setWineCount($rescon['Products']['Total']);
 				$this->setRequestCode($rescon['Status']['ReturnCode']);
 				$this->setStatus($rescon['Status']['ReturnCode']);
 			}
@@ -246,12 +246,21 @@
 		private function setWineData($w)
 		{
 			$r = true;
+			$data = array();
 			try {
-				$this->windat = $w;
+				for($i = 0; $i < count($w); $i++)
+				{
+					if(isset($w[$i]['Name']) && $w[$i]['Name'] != "")
+					{
+						array_push($data, $w[$i]);
+					}
+				}
 			}
 			catch(Exception $e) {
 				$r = false;
 			}
+			$this->windat = $data;
+                        $this->setWineCount(count($data));
 			return $r;
 		}
 

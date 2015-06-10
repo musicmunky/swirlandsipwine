@@ -87,7 +87,8 @@
 
 		if($rcode == 0)
 		{
-			$total = $wine->getWineCount() > 10 ? 10 : $wine->getWineCount();
+			$total = $wine->getWineCount();
+			//$total = $wine->getWineCount() > 10 ? 10 : $wine->getWineCount();
 			$wntmp = array();
 			for($i = 0; $i < $total; $i++)
 			{

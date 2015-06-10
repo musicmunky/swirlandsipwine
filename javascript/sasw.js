@@ -143,6 +143,12 @@ function runSearchResponse(h)
 
 			FUSION.get.node("wineinfo").appendChild(windiv);
 		}
+		var msg = "";
+		if(rc > 25)
+		{
+			msg = " (consider refining your search)";
+		}
+		FUSION.get.node("maincontent").innerHTML = "Number of wines returned: " + rc + msg;
 		var wh = FUSION.get.pageHeight() - 60;
 		var dh = ((132 * rc) + 200);
 // 		var ph = (wh > dh) ? wh : dh;
