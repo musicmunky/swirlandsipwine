@@ -165,7 +165,8 @@ input[type=button]:hover, input[type=submit]:hover {
 
 .header-middle-top-left {
 /* 	font-family: 'Italianno', cursive; */
-	font-family: 'Dancing Script', cursive;
+/* 	font-family: 'Dancing Script', cursive; */
+	font-family: 'questa_granderegular';
 	font-size:70px;
 	width:499px;
 	float:left;
