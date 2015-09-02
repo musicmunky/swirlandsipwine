@@ -65,7 +65,7 @@
 			$apiurl = "";
 
 			try {
-				$apinfo = mysql_fetch_assoc(mysql_query("SELECT APIKEY, URL FROM wineapikeys WHERE SERVICE='wine.com';"));
+				$apinfo = mysql_fetch_assoc(mysql_query("SELECT APIKEY, URL FROM apikeys WHERE SERVICE='wine.com';"));
 				$apikey = $apinfo['APIKEY'];
 				$apiurl = $apinfo['URL'];
 			}
