@@ -46,3 +46,5 @@ Thumbs.db
 
 # SPECIFIC USER FILES #
 php/connect.php
+error_log
+requests_log
