@@ -1,5 +1,13 @@
 <?php
 
+
+/*
+
+	POSSIBLE FONT FOR LOGO:  Kabel DT Condensed
+
+*/
+
+
 	//require 'php/shutdown.php';
 	define('LIBRARY_CHECK',true);
 	require 'php/saswlib.php';
@@ -21,7 +29,7 @@
 
 		<div id="mainwrapper" class="mainwrapper">
 			<div id="maincontent" class="maincontent">
-				Welcome!
+				Welcome to Swirl and Sip!
 			</div>
 			<div id="wineinfo" style="width:100%;float:left;"></div>
 		</div>
